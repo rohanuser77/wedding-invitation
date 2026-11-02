@@ -1,0 +1,113 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --gold-gradient: linear-gradient(135deg, #ECC872 0%, #C59A30 45%, #DFBA55 70%, #997418 100%);
+    --gold-text-gradient: linear-gradient(135deg, #ECC872 0%, #C59A30 50%, #8C6710 100%);
+    --royal-maroon-gradient: linear-gradient(160deg, #580B14 0%, #35050A 100%);
+    --paper-texture: radial-gradient(circle at 50% 50%, #FFFDF9 0%, #FAF4E8 100%);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: #FAF7F2;
+    color: #2D2723;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+
+  /* Custom subtle luxury scrollbar */
+  ::-webkit-scrollbar {
+    width: 7px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #FAF5EB;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #C59A30;
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #A37C1E;
+  }
+}
+
+@layer utilities {
+  .text-gold-gradient {
+    background: var(--gold-text-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .border-gold-shimmer {
+    border-color: #C59A30;
+    box-shadow: 0 0 15px rgba(197, 154, 48, 0.25);
+  }
+
+  .royal-card-shadow {
+    box-shadow: 0 20px 45px -10px rgba(78, 12, 19, 0.12), 0 0 0 1px rgba(197, 154, 48, 0.2);
+  }
+
+  .royal-glass {
+    background: rgba(253, 251, 247, 0.88);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(197, 154, 48, 0.25);
+  }
+
+  .royal-dark-glass {
+    background: rgba(26, 17, 34, 0.85);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(228, 203, 121, 0.3);
+  }
+
+  .font-script {
+    font-family: 'Great Vibes', cursive;
+  }
+
+  .font-serif-royal {
+    font-family: 'Cinzel', 'Playfair Display', serif;
+  }
+
+  .font-decorative {
+    font-family: 'Cinzel Decorative', serif;
+  }
+}
+
+/* Authentic Indian Palace Arch (Mughal/Rajput Cusped Arch) Clip Paths */
+.arch-top {
+  border-radius: 180px 180px 16px 16px;
+}
+
+.arch-window {
+  border-radius: 240px 240px 20px 20px;
+}
+
+/* Subtle gold foil texture overlay */
+.bg-paper-pattern {
+  background-color: #FAF7F2;
+  background-image: radial-gradient(#d6b258 0.75px, transparent 0.75px), radial-gradient(#d6b258 0.75px, #FAF7F2 0.75px);
+  background-size: 30px 30px;
+  background-position: 0 0, 15px 15px;
+  background-opacity: 0.1;
+}
+
+/* Envelope 3D Fold Transition */
+.perspective-1000 {
+  perspective: 1200px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
