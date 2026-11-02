@@ -42,7 +42,7 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="relative min-h-screen bg-ivory text-neutral-800 selection:bg-gold-500 selection:text-white">
+    <div className="relative min-h-screen bg-[#0D0812] text-[#FAF4EB] selection:bg-gold-500 selection:text-neutral-950">
       
       {/* 1. Full-screen Opening Experience — Royal Envelope */}
       {!envelopeOpened && (

@@ -42,8 +42,8 @@ export const RoyalNavbar: React.FC<RoyalNavbarProps> = ({ onOpenShareModal, gues
           <a href="#" className="flex items-center gap-2.5 group">
             <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-gold-600 via-gold-400 to-gold-200 p-[1.5px] shadow-sm">
               <div className="w-full h-full rounded-full bg-neutral-950 flex items-center justify-center">
-                <span className="font-serif-royal text-gold-300 text-xs font-bold tracking-wider">
-                  {weddingConfig.couple.groom.firstName[0]} & {weddingConfig.couple.bride.firstName[0]}
+                <span className="font-serif-royal text-gold-300 text-[11px] font-bold tracking-wider">
+                  P1 & P2
                 </span>
               </div>
             </div>

@@ -141,8 +141,8 @@ export const RoyalEnvelope: React.FC<RoyalEnvelopeProps> = ({
             <div className="relative z-10 text-center mb-3">
               <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-full bg-gradient-to-tr from-gold-600 via-gold-400 to-gold-200 p-[2px] shadow-lg mb-2">
                 <div className="w-full h-full rounded-full bg-royal-maroon flex items-center justify-center border border-gold-300">
-                  <span className="font-serif-royal text-gold-300 text-lg sm:text-xl font-bold tracking-wider">
-                    {weddingConfig.couple.groom.firstName[0]} & {weddingConfig.couple.bride.firstName[0]}
+                  <span className="font-serif-royal text-gold-300 text-base sm:text-lg font-bold tracking-wider">
+                    P1 & P2
                   </span>
                 </div>
               </div>

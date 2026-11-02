@@ -5,7 +5,7 @@ import { weddingConfig } from '../../data/weddingConfig';
 import type { WeddingEvent } from '../../data/weddingConfig';
 import { CornerOrnament, RoyalDivider, FloatingParticles } from '../ornaments/MandalaBorder';
 import { createGoogleCalendarUrl, downloadIcsFile } from '../../utils/calendar';
-import { Calendar, Clock, MapPin, Navigation, Palette, Download, ExternalLink, Sparkles } from 'lucide-react';
+import { Calendar, Clock, MapPin, Navigation, Palette, Download, ExternalLink } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -25,24 +25,22 @@ export const RoyalEventsDeckSection: React.FC = () => {
     if (cards.length === 0 || !containerRef.current) return;
 
     const ctx = gsap.context(() => {
-      // Set initial positions: first card is in view, remaining cards are waiting below
       cards.forEach((card, i) => {
         if (i === 0) {
           gsap.set(card, { opacity: 1, scale: 1, yPercent: 0, zIndex: 10 });
         } else {
-          gsap.set(card, { opacity: 0, scale: 0.9, yPercent: 40, zIndex: 10 + i });
+          gsap.set(card, { opacity: 0, scale: 0.94, yPercent: 35, zIndex: 10 + i });
         }
       });
 
-      // Pin the section and scrub card transitions as user scrolls
       const totalEvents = cards.length;
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
           start: 'top top',
-          end: `+=${totalEvents * 100}%`,
+          end: `+=${totalEvents * 90}%`,
           pin: true,
-          scrub: 0.8,
+          scrub: 0.7,
           anticipatePin: 1,
           onUpdate: (self) => {
             const progress = self.progress;
@@ -55,16 +53,16 @@ export const RoyalEventsDeckSection: React.FC = () => {
         },
       });
 
-      // Sequential card transitions: Card i slides/lifts off and Card i+1 pops into place
+      // Smooth card lift off and next card pop-in
       for (let i = 0; i < totalEvents - 1; i++) {
         const currentCard = cards[i];
         const nextCard = cards[i + 1];
 
         tl.to(currentCard, {
-          yPercent: -60,
-          scale: 0.92,
+          yPercent: -55,
+          scale: 0.94,
           opacity: 0,
-          rotationX: 8,
+          rotationX: 6,
           duration: 1,
           ease: 'power2.inOut',
         })
@@ -74,7 +72,7 @@ export const RoyalEventsDeckSection: React.FC = () => {
           opacity: 1,
           duration: 1,
           ease: 'power2.out',
-        }, '<0.3');
+        }, '<0.25');
       }
 
     }, containerRef);
@@ -92,260 +90,203 @@ export const RoyalEventsDeckSection: React.FC = () => {
     }
   };
 
+  // Dark themes per ceremony
+  const darkCardThemes = {
+    haldi: 'from-[#1C1205] via-[#140C03] to-[#0D0801] border-amber-400/80 shadow-[0_0_35px_rgba(245,158,11,0.2)]',
+    mehndi: 'from-[#081812] via-[#05110C] to-[#020A07] border-emerald-400/80 shadow-[0_0_35px_rgba(16,185,129,0.2)]',
+    sangeet: 'from-[#190C24] via-[#110719] to-[#0A0410] border-purple-400/80 shadow-[0_0_35px_rgba(168,85,247,0.2)]',
+    tilak: 'from-[#1C070D] via-[#140409] to-[#0D0205] border-rose-400/80 shadow-[0_0_35px_rgba(244,63,94,0.2)]',
+    wedding: 'from-[#22070D] via-[#170408] to-[#0D0204] border-red-500/90 shadow-[0_0_35px_rgba(239,68,68,0.25)]',
+    reception: 'from-[#14121B] via-[#0E0D13] to-[#08070B] border-gold-400/80 shadow-[0_0_35px_rgba(218,180,78,0.25)]',
+  };
+
   return (
     <section 
       ref={containerRef} 
       id="events" 
-      className="relative min-h-screen w-full bg-[#180E1A] text-neutral-800 flex flex-col justify-center items-center py-12 px-4 sm:px-6 overflow-hidden select-none"
+      className="relative min-h-screen w-full bg-[#0E0914] text-[#FAF4EB] flex flex-col justify-center items-center py-10 px-4 sm:px-6 overflow-hidden select-none"
     >
-      {/* Royal Palace Atmosphere */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-amber-950/50 via-[#180E1A] to-[#0A060C] pointer-events-none" />
-      <FloatingParticles count={25} color="gold" />
+      {/* Dark Ambient Atmosphere */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-amber-950/30 via-[#0E0914] to-[#07040A] pointer-events-none" />
+      <FloatingParticles count={20} color="gold" />
 
       {/* Top Header & Ceremony Index Indicator */}
-      <div className="relative z-20 text-center max-w-4xl mx-auto mb-6 px-4">
+      <div className="relative z-20 text-center max-w-3xl mx-auto mb-5 px-4">
         <p className="font-hindi text-gold-400 text-sm sm:text-base tracking-widest font-semibold drop-shadow-sm">
-          || मांगलिक वैवाहिक उत्सव एवं संस्कार ||
+          || मांगलिक वैवाहिक उत्सव ||
         </p>
-        <h2 className="font-serif-royal text-2xl sm:text-4xl md:text-5xl uppercase tracking-[0.12em] font-bold text-ivory mt-1">
-          The Wedding Ceremonies
+        <h2 className="font-serif-royal text-2xl sm:text-4xl uppercase tracking-[0.12em] font-bold text-gold-100 mt-1">
+          Wedding Ceremonies
         </h2>
         <RoyalDivider className="my-2" light={true} />
-        <p className="font-serif text-xs sm:text-sm text-gold-200/90 font-light max-w-xl mx-auto">
-          Scroll down to unfold each royal ceremony card • Function {activeCardIndex + 1} of {events.length}
-        </p>
-
+        
         {/* Quick Jump Pagination Bar */}
-        <div className="flex items-center justify-center gap-2 mt-4 flex-wrap">
+        <div className="flex items-center justify-center gap-2 mt-3 flex-wrap">
           {events.map((evt, idx) => (
             <button
               key={evt.id}
               onClick={() => scrollToCard(idx)}
-              className={`px-3.5 py-1.5 rounded-full font-serif text-xs tracking-wider transition-all duration-300 border flex items-center gap-1.5 ${
+              className={`px-3 py-1 rounded-full font-serif text-xs tracking-wider transition-all duration-300 border flex items-center gap-1.5 ${
                 idx === activeCardIndex
                   ? 'bg-gradient-to-r from-gold-500 to-gold-600 text-neutral-950 font-bold border-gold-300 shadow-[0_0_15px_rgba(218,180,78,0.5)] scale-105'
-                  : 'bg-neutral-950/70 text-gold-300/80 border-gold-500/20 hover:border-gold-400 hover:text-white'
+                  : 'bg-neutral-900/80 text-gold-300/80 border-gold-500/20 hover:border-gold-400 hover:text-white'
               }`}
             >
-              <span>{evt.number}.</span>
-              <span className="hidden sm:inline">{evt.name.split('&')[0].trim()}</span>
+              <span className="font-bold">{evt.number}.</span>
+              <span>{evt.name.split('&')[0].trim()}</span>
             </button>
           ))}
         </div>
       </div>
 
-      {/* 3D Stacked Card Deck Container */}
+      {/* 3D Stacked Card Deck: Small & Compact with Crisp Info Only */}
       <div 
         ref={deckRef}
-        className="relative w-full max-w-4xl h-[560px] sm:h-[580px] md:h-[600px] perspective-1000 z-10 flex items-center justify-center"
+        className="relative w-full max-w-2xl h-[440px] sm:h-[460px] perspective-1000 z-10 flex items-center justify-center"
       >
         {events.map((event: WeddingEvent, index: number) => {
+          const themeStyle = darkCardThemes[event.id as keyof typeof darkCardThemes] || darkCardThemes.wedding;
           return (
             <div
               key={event.id}
               ref={(el) => {
                 cardRefs.current[index] = el;
               }}
-              className={`absolute inset-x-2 sm:inset-x-6 top-0 bottom-0 rounded-3xl bg-gradient-to-b ${event.theme.cardBg} border-2 ${event.theme.cardBorder} shadow-2xl p-6 sm:p-10 flex flex-col justify-between overflow-hidden transition-shadow`}
-              style={{
-                boxShadow: '0 25px 60px -15px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(197, 154, 48, 0.35)',
-              }}
+              className={`absolute inset-x-2 sm:inset-x-4 top-0 bottom-0 rounded-3xl bg-gradient-to-b ${themeStyle} border-2 p-5 sm:p-7 flex flex-col justify-between overflow-hidden`}
             >
-              {/* Corner Royal Filigree Ornaments */}
-              <CornerOrnament position="top-left" size={45} className="absolute top-2 left-2 text-gold-600" />
-              <CornerOrnament position="top-right" size={45} className="absolute top-2 right-2 text-gold-600" />
-              <CornerOrnament position="bottom-left" size={45} className="absolute bottom-2 left-2 text-gold-600" />
-              <CornerOrnament position="bottom-right" size={45} className="absolute bottom-2 right-2 text-gold-600" />
+              {/* Corner Filigrees */}
+              <CornerOrnament position="top-left" size={32} className="absolute top-2 left-2 text-gold-400" />
+              <CornerOrnament position="top-right" size={32} className="absolute top-2 right-2 text-gold-400" />
+              <CornerOrnament position="bottom-left" size={32} className="absolute bottom-2 left-2 text-gold-400" />
+              <CornerOrnament position="bottom-right" size={32} className="absolute bottom-2 right-2 text-gold-400" />
 
-              {/* Watermark Pattern */}
-              <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#966F12_1px,transparent_1px)] [background-size:20px_20px] pointer-events-none" />
-
-              {/* Card Header: Hindi Title & Numbering */}
-              <div className="relative z-10 flex items-start justify-between border-b border-gold-400/40 pb-4">
-                <div>
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="font-hindi text-royal-crimson text-sm sm:text-base font-bold tracking-wide">
-                      {event.hindiTitle}
-                    </span>
-                    <span className="text-gold-500">•</span>
-                    <span className={`px-2.5 py-0.5 rounded-full text-[11px] font-serif font-bold uppercase tracking-wider border ${event.theme.badgeBg}`}>
+              {/* Header: Ceremony Number & Title */}
+              <div className="relative z-10 border-b border-gold-500/25 pb-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="px-2.5 py-0.5 rounded-full text-xs font-serif font-bold uppercase tracking-wider bg-gold-950/80 border border-gold-400/60 text-gold-300">
                       Event {event.number}
                     </span>
-                  </div>
-                  <h3 className="font-serif-royal text-2xl sm:text-3xl md:text-4xl text-royal-maroon font-bold tracking-wide">
-                    {event.name}
-                  </h3>
-                  <p className="font-serif text-xs sm:text-sm text-neutral-600 italic mt-0.5 font-light">
-                    "{event.slogan}"
-                  </p>
-                </div>
-
-                {/* Auspicious Lotus / Diya Accent */}
-                <div className="hidden sm:flex flex-col items-center shrink-0 text-gold-600">
-                  <span className="text-2xl">🪷</span>
-                  <span className="text-[10px] font-hindi font-semibold text-royal-maroon">शुभ मंगल</span>
-                </div>
-              </div>
-
-              {/* Card Body: Description, Timings, Venue, Dress Code */}
-              <div className="relative z-10 my-4 grid grid-cols-1 md:grid-cols-12 gap-5 items-center">
-                
-                {/* Left 7 Columns: Timings, Address, Description, Rituals */}
-                <div className="md:col-span-7 space-y-4">
-                  <p className="text-xs sm:text-sm text-neutral-800 leading-relaxed font-normal">
-                    {event.description}
-                  </p>
-
-                  {/* Muhurat Callout if available */}
-                  {event.muhurat && (
-                    <div className="p-3 rounded-xl bg-gradient-to-r from-red-100/90 to-amber-100/90 border border-red-300 text-royal-crimson flex items-center gap-2.5">
-                      <Sparkles className="w-4 h-4 text-royal-crimson shrink-0" />
-                      <div className="text-xs font-serif font-semibold">
-                        <span className="uppercase tracking-wider">Auspicious Muhurat: </span>
-                        <span className="text-neutral-900 font-bold">{event.muhurat}</span>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Date, Time & Venue in clean high-contrast boxes */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    
-                    {/* Date & Time */}
-                    <div className="p-3.5 rounded-2xl bg-white/90 border border-gold-300 shadow-sm flex items-start gap-3">
-                      <div className="p-2 rounded-xl bg-gold-50 text-royal-maroon border border-gold-300 shrink-0">
-                        <Calendar className="w-4 h-4" />
-                      </div>
-                      <div>
-                        <span className="text-[10px] uppercase font-serif tracking-widest text-neutral-500 font-semibold block">
-                          Day & Date
-                        </span>
-                        <h4 className="font-serif text-xs sm:text-sm text-neutral-900 font-bold mt-0.5">
-                          {event.displayDate}
-                        </h4>
-                        <div className="flex items-center gap-1 text-xs text-royal-maroon font-semibold mt-1">
-                          <Clock className="w-3.5 h-3.5 text-gold-600" />
-                          <span>{event.time}</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Venue */}
-                    <div className="p-3.5 rounded-2xl bg-white/90 border border-gold-300 shadow-sm flex items-start gap-3">
-                      <div className="p-2 rounded-xl bg-gold-50 text-royal-maroon border border-gold-300 shrink-0">
-                        <MapPin className="w-4 h-4" />
-                      </div>
-                      <div>
-                        <span className="text-[10px] uppercase font-serif tracking-widest text-neutral-500 font-semibold block">
-                          Ceremony Venue
-                        </span>
-                        <h4 className="font-serif text-xs sm:text-sm text-neutral-900 font-bold mt-0.5">
-                          {event.venue}
-                        </h4>
-                        <p className="text-[11px] text-neutral-600 mt-0.5 line-clamp-1">
-                          {event.address}
-                        </p>
-                      </div>
-                    </div>
-
-                  </div>
-
-                  {/* Ritual Highlights */}
-                  {event.rituals && (
-                    <div className="flex items-center gap-2 flex-wrap pt-1">
-                      <span className="text-[11px] font-serif uppercase tracking-wider text-neutral-600 font-bold">Rituals:</span>
-                      {event.rituals.map((ritual, rIdx) => (
-                        <span 
-                          key={rIdx}
-                          className="px-2.5 py-1 rounded-full bg-white/90 border border-gold-300 text-royal-maroon text-[11px] font-serif font-medium shadow-xs"
-                        >
-                          ✦ {ritual}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-                </div>
-
-                {/* Right 5 Columns: Visual Image & Dress Code Swatches */}
-                <div className="md:col-span-5 flex flex-col justify-between space-y-3">
-                  
-                  {/* Photo Thumbnail */}
-                  <div className="relative w-full aspect-[16/10] sm:aspect-[16/9] rounded-2xl overflow-hidden border-2 border-gold-400 shadow-md">
-                    <img
-                      src={event.image}
-                      alt={event.name}
-                      className="w-full h-full object-cover filter brightness-95"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent pointer-events-none" />
-                    <span className="absolute bottom-2 left-3 font-serif text-xs text-white tracking-widest font-semibold uppercase drop-shadow-md">
-                      Amber Palace, Indore
+                    <span className="font-hindi text-gold-400 text-sm font-semibold">
+                      {event.hindiTitle}
                     </span>
                   </div>
+                  <span className="text-xl">🪷</span>
+                </div>
 
-                  {/* Dress Code Swatch Box */}
-                  <div className="p-3.5 rounded-2xl bg-white/95 border border-gold-300 shadow-sm">
-                    <div className="flex items-center justify-between mb-1.5">
-                      <div className="flex items-center gap-1.5 text-royal-maroon font-serif text-xs uppercase tracking-wider font-bold">
-                        <Palette className="w-3.5 h-3.5 text-gold-600" />
-                        <span>Dress Code: {event.dressCode.title}</span>
-                      </div>
-                      <div className="flex items-center gap-1.5">
-                        {event.dressCode.palette.map((c, cIdx) => (
-                          <span
-                            key={cIdx}
-                            className="w-4 h-4 rounded-full border border-neutral-300 shadow-xs"
-                            style={{ backgroundColor: c.hex }}
-                            title={c.name}
-                          />
-                        ))}
+                <h3 className="font-serif-royal text-2xl sm:text-3xl text-gold-100 font-bold tracking-wide mt-1.5">
+                  {event.name}
+                </h3>
+              </div>
+
+              {/* Crisp Information Grid */}
+              <div className="relative z-10 my-3 space-y-3">
+                
+                {/* Date, Time & Venue */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  
+                  {/* Date & Time */}
+                  <div className="p-3 rounded-2xl bg-neutral-950/60 border border-gold-500/30 flex items-start gap-2.5">
+                    <div className="p-2 rounded-xl bg-gold-950 text-gold-400 border border-gold-500/40 shrink-0">
+                      <Calendar className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <span className="text-[10px] uppercase font-serif tracking-widest text-neutral-400 font-bold block">
+                        Date & Time
+                      </span>
+                      <h4 className="font-serif text-xs sm:text-sm text-gold-100 font-bold mt-0.5">
+                        {event.displayDate}
+                      </h4>
+                      <div className="flex items-center gap-1 text-xs text-gold-300 font-medium mt-0.5">
+                        <Clock className="w-3.5 h-3.5 text-gold-400" />
+                        <span>{event.time}</span>
                       </div>
                     </div>
-                    <p className="text-[11px] text-neutral-700 leading-snug font-normal">
-                      {event.dressCode.description}
-                    </p>
+                  </div>
+
+                  {/* Venue */}
+                  <div className="p-3 rounded-2xl bg-neutral-950/60 border border-gold-500/30 flex items-start gap-2.5">
+                    <div className="p-2 rounded-xl bg-gold-950 text-gold-400 border border-gold-500/40 shrink-0">
+                      <MapPin className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <span className="text-[10px] uppercase font-serif tracking-widest text-neutral-400 font-bold block">
+                        Ceremony Venue
+                      </span>
+                      <h4 className="font-serif text-xs sm:text-sm text-gold-100 font-bold mt-0.5 line-clamp-1">
+                        {event.venue}
+                      </h4>
+                      <p className="text-[11px] text-neutral-300 mt-0.5 line-clamp-1">
+                        {event.address}
+                      </p>
+                    </div>
                   </div>
 
                 </div>
 
+                {/* Muhurat or Special Note if present */}
+                {event.muhurat && (
+                  <div className="p-2.5 rounded-xl bg-red-950/40 border border-red-500/40 text-gold-200 text-xs flex items-center gap-2">
+                    <span className="font-serif font-bold text-red-300 uppercase tracking-wider shrink-0">Muhurat:</span>
+                    <span className="font-serif text-gold-100 font-medium">{event.muhurat}</span>
+                  </div>
+                )}
+
+                {/* Dress Code (Crisp line with swatches) */}
+                <div className="p-2.5 rounded-2xl bg-neutral-950/50 border border-gold-500/25 flex items-center justify-between">
+                  <div className="flex items-center gap-2 text-xs">
+                    <Palette className="w-3.5 h-3.5 text-gold-400 shrink-0" />
+                    <span className="font-serif text-neutral-400 font-bold uppercase tracking-wider">Dress Code:</span>
+                    <span className="font-serif text-gold-100 font-semibold">{event.dressCode.title}</span>
+                  </div>
+
+                  <div className="flex items-center gap-1.5 shrink-0">
+                    {event.dressCode.palette.map((c, cIdx) => (
+                      <span
+                        key={cIdx}
+                        className="w-3.5 h-3.5 rounded-full border border-neutral-700 shadow-sm"
+                        style={{ backgroundColor: c.hex }}
+                        title={c.name}
+                      />
+                    ))}
+                  </div>
+                </div>
+
               </div>
 
-              {/* Card Footer Actions: Google Maps & Add to Calendar */}
-              <div className="relative z-10 pt-3 border-t border-gold-400/40 flex flex-wrap items-center justify-between gap-3">
-                
-                {/* Google Maps Link */}
+              {/* Card Footer: Quick Actions */}
+              <div className="relative z-10 pt-3 border-t border-gold-500/25 flex items-center justify-between gap-2">
                 <a
                   href={event.googleMapsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-royal-maroon to-[#450910] text-gold-100 font-serif font-bold text-xs uppercase tracking-widest shadow-md hover:scale-105 active:scale-95 transition-all"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-gold-500 via-gold-400 to-gold-600 text-neutral-950 font-serif font-bold text-xs uppercase tracking-wider shadow-sm hover:scale-105 active:scale-95 transition-all"
                 >
-                  <Navigation className="w-3.5 h-3.5 text-gold-300" />
-                  <span>Open Location in Google Maps</span>
-                  <ExternalLink className="w-3 h-3 opacity-70" />
+                  <Navigation className="w-3.5 h-3.5" />
+                  <span>Google Maps</span>
+                  <ExternalLink className="w-3 h-3 opacity-60" />
                 </a>
 
-                {/* Calendar Buttons */}
                 <div className="flex items-center gap-2">
                   <a
                     href={createGoogleCalendarUrl(event)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white text-neutral-800 border border-gold-400 hover:bg-gold-50 font-serif text-xs font-semibold tracking-wider transition-all"
+                    className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-neutral-900/90 text-gold-300 border border-gold-500/40 hover:border-gold-300 font-serif text-xs font-semibold tracking-wider transition-all"
                   >
-                    <Calendar className="w-3.5 h-3.5 text-gold-600" />
-                    <span>Add to Google Calendar</span>
+                    <Calendar className="w-3.5 h-3.5 text-gold-400" />
+                    <span>Calendar</span>
                   </a>
 
                   <button
                     onClick={() => downloadIcsFile(event)}
-                    className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white text-neutral-700 border border-neutral-300 hover:border-gold-400 font-serif text-xs font-medium tracking-wider transition-all"
-                    title="Download iCal event file for Apple Calendar or Outlook"
+                    className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-neutral-900/90 text-neutral-300 border border-neutral-700 hover:border-gold-400 font-serif text-xs font-medium tracking-wider transition-all"
+                    title="Download iCal file"
                   >
                     <Download className="w-3.5 h-3.5" />
-                    <span>iCal (.ics)</span>
+                    <span>.ics</span>
                   </button>
                 </div>
-
               </div>
 
             </div>
@@ -354,8 +295,8 @@ export const RoyalEventsDeckSection: React.FC = () => {
       </div>
 
       {/* Subtle Scroll Hint */}
-      <div className="relative z-20 mt-6 text-center text-xs font-serif text-gold-300/80 tracking-widest uppercase flex items-center justify-center gap-2">
-        <span>Scroll down to reveal next ceremony</span>
+      <div className="relative z-20 mt-4 text-center text-xs font-serif text-gold-400 tracking-widest uppercase font-semibold flex items-center justify-center gap-2">
+        <span>Scroll down to unfold next event</span>
         <span className="animate-bounce">↓</span>
       </div>
 
