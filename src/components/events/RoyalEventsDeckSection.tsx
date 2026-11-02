@@ -9,6 +9,15 @@ import { Calendar, Clock, MapPin, Navigation, Palette, ExternalLink } from 'luci
 
 gsap.registerPlugin(ScrollTrigger);
 
+const ceremonyShortNames: Record<string, string> = {
+  haldi: '01. Haldi',
+  mehndi: '02. Mehndi',
+  sangeet: '03. Sangeet',
+  tilak: '04. Tilak',
+  wedding: '05. Varmala',
+  reception: '06. Reception',
+};
+
 export const RoyalEventsDeckSection: React.FC = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const deckRef = useRef<HTMLDivElement | null>(null);
@@ -41,7 +50,7 @@ export const RoyalEventsDeckSection: React.FC = () => {
           start: 'top top',
           end: `+=${totalEvents * 100}%`,
           pin: true,
-          scrub: 0.4, // Responsive scrub with zero touch lag
+          scrub: 0.4,
           anticipatePin: 1,
           fastScrollEnd: true,
           preventOverlaps: true,
@@ -56,7 +65,6 @@ export const RoyalEventsDeckSection: React.FC = () => {
         },
       });
 
-      // Smooth scroll deck transition: Current card slides up and off, next card pops up
       for (let i = 0; i < totalEvents - 1; i++) {
         const currentCard = cards[i];
         const nextCard = cards[i + 1];
@@ -95,7 +103,6 @@ export const RoyalEventsDeckSection: React.FC = () => {
     }
   };
 
-  // Dark themes per ceremony
   const darkCardThemes = {
     haldi: 'from-[#1E1306] via-[#140C03] to-[#0A0601] border-amber-400/80 shadow-[0_10px_35px_rgba(245,158,11,0.25)]',
     mehndi: 'from-[#0A1A13] via-[#05110C] to-[#020A07] border-emerald-400/80 shadow-[0_10px_35px_rgba(16,185,129,0.25)]',
@@ -115,39 +122,38 @@ export const RoyalEventsDeckSection: React.FC = () => {
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-amber-950/30 via-[#0E0914] to-[#07040A] pointer-events-none" />
       <FloatingParticles count={16} color="gold" />
 
-      {/* Top Header & Ceremony Index Indicator */}
-      <div className="relative z-20 text-center max-w-3xl mx-auto mb-3 sm:mb-5 px-3">
-        <p className="font-hindi text-gold-400 text-xs sm:text-base tracking-widest font-semibold drop-shadow-sm">
+      {/* Top Header — Guaranteed 100% Centered on Both Mobile and Web */}
+      <div className="relative z-20 w-full text-center flex flex-col items-center justify-center max-w-3xl mx-auto mb-4 sm:mb-6 px-3">
+        <p className="w-full text-center font-hindi text-gold-400 text-xs sm:text-base tracking-widest font-semibold drop-shadow-sm">
           || मांगलिक वैवाहिक उत्सव ||
         </p>
-        <h2 className="font-serif-royal text-2xl sm:text-4xl uppercase tracking-[0.12em] font-bold text-gold-100 mt-0.5">
+        <h2 className="w-full text-center font-serif-royal text-xl sm:text-3xl md:text-4xl uppercase tracking-[0.06em] sm:tracking-[0.12em] font-bold text-gold-100 mt-1">
           Wedding Ceremonies
         </h2>
-        <RoyalDivider className="my-1.5 sm:my-2" light={true} />
+        <RoyalDivider className="my-1.5 sm:my-2 mx-auto" light={true} />
         
-        {/* Quick Jump Navigation Pill Bar */}
-        <div className="flex items-center justify-start sm:justify-center gap-1.5 overflow-x-auto pb-2 pt-1 max-w-full scrollbar-none px-1">
+        {/* Clean, Non-Overflowing Centered Ceremony Selector (No scrollbars, no cut-off words) */}
+        <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2.5 w-full max-w-3xl mx-auto pt-1">
           {events.map((evt, idx) => (
             <button
               key={evt.id}
               onClick={() => scrollToCard(idx)}
-              className={`shrink-0 px-3 py-1 rounded-full font-serif text-xs tracking-wider transition-all duration-300 border flex items-center gap-1 ${
+              className={`px-3 sm:px-4 py-1.5 rounded-full font-serif text-xs tracking-wider transition-all duration-300 border flex items-center justify-center whitespace-nowrap ${
                 idx === activeCardIndex
                   ? 'bg-gradient-to-r from-gold-500 to-gold-600 text-neutral-950 font-bold border-gold-300 shadow-[0_0_15px_rgba(218,180,78,0.5)] scale-105'
-                  : 'bg-neutral-900/80 text-gold-300/80 border-gold-500/20 hover:border-gold-400 hover:text-white'
+                  : 'bg-neutral-900/90 text-gold-300/90 border-gold-500/25 hover:border-gold-400 hover:text-white'
               }`}
             >
-              <span className="font-bold">{evt.number}.</span>
-              <span>{evt.name.split('&')[0].trim()}</span>
+              <span>{ceremonyShortNames[evt.id] || `${evt.number}. ${evt.name}`}</span>
             </button>
           ))}
         </div>
       </div>
 
-      {/* 3D Scroll Card Deck: Pinned, Smooth, Uncongested & Spacious */}
+      {/* 3D Scroll Card Deck: Centered, Uncongested, No Edge Clipping */}
       <div 
         ref={deckRef}
-        className="relative w-full max-w-xl sm:max-w-2xl h-[420px] sm:h-[450px] perspective-1000 z-10 flex items-center justify-center px-1"
+        className="relative w-full max-w-xl sm:max-w-2xl h-[440px] sm:h-[470px] perspective-1000 z-10 flex items-center justify-center px-1"
       >
         {events.map((event: WeddingEvent, index: number) => {
           const themeStyle = darkCardThemes[event.id as keyof typeof darkCardThemes] || darkCardThemes.wedding;
@@ -158,18 +164,18 @@ export const RoyalEventsDeckSection: React.FC = () => {
                 cardRefs.current[index] = el;
               }}
               style={{ willChange: 'transform, opacity' }}
-              className={`absolute inset-x-1 sm:inset-x-3 top-0 bottom-0 rounded-2xl sm:rounded-3xl bg-gradient-to-b ${themeStyle} border-2 p-5 sm:p-7 flex flex-col justify-between overflow-hidden shadow-2xl`}
+              className={`absolute inset-x-1 sm:inset-x-3 top-0 bottom-0 rounded-2xl sm:rounded-3xl bg-gradient-to-b ${themeStyle} border-2 px-5 sm:px-8 py-5 sm:py-6 flex flex-col justify-between overflow-hidden shadow-2xl`}
             >
-              {/* Corner Filigrees */}
-              <CornerOrnament position="top-left" size={28} className="absolute top-2 left-2 text-gold-400" />
-              <CornerOrnament position="top-right" size={28} className="absolute top-2 right-2 text-gold-400" />
-              <CornerOrnament position="bottom-left" size={28} className="absolute bottom-2 left-2 text-gold-400" />
-              <CornerOrnament position="bottom-right" size={28} className="absolute bottom-2 right-2 text-gold-400" />
+              {/* Corner Filigrees (Placed safely in corners with generous padding) */}
+              <CornerOrnament position="top-left" size={24} className="absolute top-2 left-2 text-gold-400 pointer-events-none" />
+              <CornerOrnament position="top-right" size={24} className="absolute top-2 right-2 text-gold-400 pointer-events-none" />
+              <CornerOrnament position="bottom-left" size={24} className="absolute bottom-2 left-2 text-gold-400 pointer-events-none" />
+              <CornerOrnament position="bottom-right" size={24} className="absolute bottom-2 right-2 text-gold-400 pointer-events-none" />
 
               {/* Header: Ceremony Badge & Title */}
               <div className="relative z-10 border-b border-gold-500/25 pb-2.5">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-wrap">
                     <span className="px-2.5 py-0.5 rounded-full text-[11px] font-serif font-bold uppercase tracking-wider bg-gold-950/90 border border-gold-400/60 text-gold-300">
                       Event {event.number} of {events.length}
                     </span>
@@ -180,21 +186,21 @@ export const RoyalEventsDeckSection: React.FC = () => {
                   <span className="text-xl">🪷</span>
                 </div>
 
-                <h3 className="font-serif-royal text-xl sm:text-3xl text-gold-100 font-bold tracking-wide mt-1 leading-snug">
+                <h3 className="font-serif-royal text-xl sm:text-2xl md:text-3xl text-gold-100 font-bold tracking-wide mt-1 leading-snug break-words">
                   {event.name}
                 </h3>
               </div>
 
-              {/* Clean, Uncongested Info Sections */}
-              <div className="relative z-10 my-2.5 space-y-2.5">
+              {/* Information Cards — No words cut off */}
+              <div className="relative z-10 my-2 space-y-2.5">
                 
                 {/* Date & Time */}
                 <div className="p-3 rounded-xl bg-neutral-950/70 border border-gold-500/30 flex items-center gap-3">
                   <div className="p-2 rounded-lg bg-gold-950 text-gold-400 border border-gold-500/40 shrink-0">
                     <Calendar className="w-4 h-4" />
                   </div>
-                  <div className="min-w-0">
-                    <h4 className="font-serif text-xs sm:text-sm text-gold-100 font-bold truncate">
+                  <div className="min-w-0 flex-1">
+                    <h4 className="font-serif text-xs sm:text-sm text-gold-100 font-bold break-words">
                       {event.displayDate}
                     </h4>
                     <div className="flex items-center gap-1.5 text-xs text-gold-300 font-medium mt-0.5">
@@ -209,11 +215,11 @@ export const RoyalEventsDeckSection: React.FC = () => {
                   <div className="p-2 rounded-lg bg-gold-950 text-gold-400 border border-gold-500/40 shrink-0 mt-0.5">
                     <MapPin className="w-4 h-4" />
                   </div>
-                  <div className="min-w-0">
-                    <h4 className="font-serif text-xs sm:text-sm text-gold-100 font-bold truncate">
+                  <div className="min-w-0 flex-1">
+                    <h4 className="font-serif text-xs sm:text-sm text-gold-100 font-bold break-words">
                       {event.venue}
                     </h4>
-                    <p className="text-xs text-neutral-300 truncate mt-0.5">
+                    <p className="text-xs text-neutral-300 break-words mt-0.5 leading-snug">
                       {event.address}
                     </p>
                   </div>
@@ -223,19 +229,19 @@ export const RoyalEventsDeckSection: React.FC = () => {
                 {event.muhurat && (
                   <div className="p-2.5 rounded-xl bg-red-950/50 border border-red-500/40 text-gold-200 text-xs flex items-center gap-2">
                     <span className="font-serif font-bold text-red-300 uppercase tracking-wider shrink-0">Muhurat:</span>
-                    <span className="font-serif text-gold-100 font-medium truncate">{event.muhurat}</span>
+                    <span className="font-serif text-gold-100 font-medium break-words">{event.muhurat}</span>
                   </div>
                 )}
 
-                {/* Dress Code */}
-                <div className="p-2.5 rounded-xl bg-neutral-950/60 border border-gold-500/25 flex items-center justify-between text-xs">
-                  <div className="flex items-center gap-2 min-w-0">
+                {/* Dress Code — Clean wrapping without cut-off words */}
+                <div className="p-2.5 rounded-xl bg-neutral-950/60 border border-gold-500/25 flex items-center justify-between text-xs gap-2">
+                  <div className="flex items-center gap-2 min-w-0 flex-1">
                     <Palette className="w-3.5 h-3.5 text-gold-400 shrink-0" />
                     <span className="font-serif text-neutral-400 font-bold uppercase text-[10px] sm:text-xs shrink-0">Dress Code:</span>
-                    <span className="font-serif text-gold-100 font-semibold truncate text-xs">{event.dressCode.title}</span>
+                    <span className="font-serif text-gold-100 font-semibold break-words text-xs">{event.dressCode.title}</span>
                   </div>
 
-                  <div className="flex items-center gap-1.5 shrink-0 ml-2">
+                  <div className="flex items-center gap-1.5 shrink-0">
                     {event.dressCode.palette.map((c, cIdx) => (
                       <span
                         key={cIdx}

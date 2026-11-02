@@ -23,11 +23,13 @@
     color: #FAF4EB;
     font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
     font-variant-numeric: lining-nums;
+    overflow-x: hidden;
   }
 
   /* Custom subtle luxury scrollbar */
   ::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
+    height: 6px;
   }
   ::-webkit-scrollbar-track {
     background: #0D0712;
@@ -38,6 +40,19 @@
   }
   ::-webkit-scrollbar-thumb:hover {
     background: #DFBA55;
+  }
+
+  /* Universal scrollbar hiding utilities */
+  .no-scrollbar::-webkit-scrollbar,
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+  .no-scrollbar,
+  .scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 }
 
