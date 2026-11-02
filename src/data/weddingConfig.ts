@@ -1,7 +1,9 @@
 export interface WeddingEvent {
   id: string;
+  number: string;
   name: string;
-  hindiTitle?: string;
+  hindiTitle: string;
+  slogan: string;
   date: string;
   displayDate: string;
   time: string;
@@ -11,39 +13,19 @@ export interface WeddingEvent {
   dressCode: {
     title: string;
     description: string;
-    palette: string[]; // hex codes or color names
+    palette: { name: string; hex: string }[];
   };
   theme: {
-    bgClass: string;
+    badgeBg: string;
     accentColor: string;
-    textColor: string;
+    cardBorder: string;
     cardBg: string;
-    pattern: 'marigold' | 'mehndi' | 'sangeet' | 'tilak' | 'mandap' | 'ballroom';
+    patternName: 'marigold' | 'mehndi' | 'sangeet' | 'tilak' | 'mandap' | 'ballroom';
   };
   image: string;
   googleMapsUrl: string;
-  googleMapsEmbed?: string;
   muhurat?: string;
-  specialHighlights?: string[];
-}
-
-export interface StoryMilestone {
-  id: string;
-  year: string;
-  title: string;
-  subtitle: string;
-  description: string;
-  image: string;
-  location: string;
-}
-
-export interface GalleryPhoto {
-  id: string;
-  title: string;
-  category: 'all' | 'ceremony' | 'prewedding' | 'couple' | 'family';
-  image: string;
-  caption?: string;
-  aspect: 'portrait' | 'landscape' | 'square';
+  rituals?: string[];
 }
 
 export interface FamilyMember {
@@ -61,10 +43,7 @@ export interface WeddingConfig {
       fatherName: string;
       motherName: string;
       grandParents?: string;
-      bio: string;
       photo: string;
-      education?: string;
-      profession?: string;
       familyHeritage?: string;
     };
     bride: {
@@ -74,17 +53,15 @@ export interface WeddingConfig {
       fatherName: string;
       motherName: string;
       grandParents?: string;
-      bio: string;
       photo: string;
-      education?: string;
-      profession?: string;
       familyHeritage?: string;
     };
+    couplePortrait: string;
   };
   weddingDetails: {
     title: string;
     hashtag: string;
-    mainWeddingDate: string; // ISO date for countdown: '2026-12-19T19:30:00'
+    mainWeddingDate: string; // ISO date for countdown
     dateRangeDisplay: string;
     city: string;
     state: string;
@@ -93,7 +70,6 @@ export interface WeddingConfig {
       name: string;
       address: string;
       mapsUrl: string;
-      coordinates?: { lat: number; lng: number };
       parkingInfo: string;
       accommodationInfo: string;
       contactPerson: string;
@@ -102,38 +78,35 @@ export interface WeddingConfig {
   };
   blessingsText: {
     sanskritInvoking: string;
+    sanskritShlok: string;
     sanskritTranslation: string;
     mainInviteText: string;
     closingQuote: string;
     closingSubtext: string;
   };
   events: WeddingEvent[];
-  story: StoryMilestone[];
-  gallery: GalleryPhoto[];
   families: {
     groomSide: {
       familyTitle: string;
-      members: FamilyMember[];
       ancestralHome: string;
+      members: FamilyMember[];
     };
     brideSide: {
       familyTitle: string;
-      members: FamilyMember[];
       ancestralHome: string;
+      members: FamilyMember[];
     };
   };
   music: {
     title: string;
     artist: string;
     src: string;
-    autoPlayPrompt: string;
   };
   rsvp: {
     enabled: boolean;
     deadline: string;
     contactEmail: string;
     contactPhone: string;
-    allowPlusOne: boolean;
   };
 }
 
@@ -146,11 +119,8 @@ export const weddingConfig: WeddingConfig = {
       fatherName: "Mr. Rajendra Sharma",
       motherName: "Mrs. Sunita Sharma",
       grandParents: "Late Shri Rameshwar Dayal & Smt. Shanti Devi Sharma",
-      bio: "An architect with a passion for heritage structures, classical music, and evening conversations over chai. Rohan found in Priya his timeless melody and compass.",
       photo: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=900&q=80",
-      education: "Master of Urban Architecture, CEPT",
-      profession: "Principal Architect, Sharma & Associates",
-      familyHeritage: "Originating from the royal cultural heritage of Indore & Jaipur",
+      familyHeritage: "Indore & Jaipur Heritage",
     },
     bride: {
       firstName: "Priya",
@@ -159,16 +129,14 @@ export const weddingConfig: WeddingConfig = {
       fatherName: "Dr. Alok Verma",
       motherName: "Dr. (Mrs.) Meenakshi Verma",
       grandParents: "Late Shri Brijmohan Lal & Smt. Kamla Devi Verma",
-      bio: "A classical Kathak dancer and pediatric physician whose warmth illuminates every room she enters. Priya discovered in Rohan a patient listener and kindred spirit.",
       photo: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=900&q=80",
-      education: "MD Pediatrics, AIIMS New Delhi",
-      profession: "Pediatric Consultant",
-      familyHeritage: "Renowned lineage of scholars and physicians from Madhya Pradesh",
+      familyHeritage: "Bhopal & Indore Heritage",
     },
+    couplePortrait: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1200&q=80",
   },
   weddingDetails: {
-    title: "Rohan & Priya Wedding Celebration",
-    hashtag: "#RoPiForever2026",
+    title: "Rohan & Priya Royal Wedding Celebration",
+    hashtag: "#RoPiForever",
     mainWeddingDate: "2026-12-19T19:30:00",
     dateRangeDisplay: "18 – 20 December 2026",
     city: "Indore",
@@ -177,290 +145,214 @@ export const weddingConfig: WeddingConfig = {
     primaryVenue: {
       name: "The Grand Amber Palace & Royal Gardens",
       address: "Bypass Road, Near Ralamandal Sanctuary, Indore, Madhya Pradesh 452020",
-      mapsUrl: "https://maps.google.com/?q=Indore+Madhya+Pradesh",
-      parkingInfo: "Complimentary Valet Parking is available at the Palace Grand Gate for all guests.",
-      accommodationInfo: "Special luxury suite arrangements reserved for outstation guests at The Grand Amber Palace.",
+      mapsUrl: "https://maps.google.com/?q=The+Grand+Amber+Palace+Indore",
+      parkingInfo: "Complimentary Valet Parking available at the Palace Grand Gate for all guests.",
+      accommodationInfo: "Luxury palace suites reserved for outstation guests at The Grand Amber Palace.",
       contactPerson: "Mr. Vikram Sharma (Wedding Concierge)",
       contactPhone: "+91 98765 43210",
     },
   },
   blessingsText: {
     sanskritInvoking: "|| श्री गणेशाय नमः ||",
-    sanskritTranslation: "Vakratunda Mahakaya Suryakoti Samaprabha | Nirvighnam Kuru Me Deva Sarvakaryeshu Sarvada ||",
-    mainInviteText: "With the divine grace of our ancestors and the blessings of Lord Ganesha, we invite you to honor us with your gracious presence and heartfelt blessings as our beloved children embark on the sacred journey of holy matrimony.",
-    closingQuote: "TWO HEARTS. ONE SACRED JOURNEY. A LIFETIME OF TOGETHERNESS.",
-    closingSubtext: "Your gracious presence, love, and divine blessings will make our celebration complete. We eagerly await to welcome you with folded hands.",
+    sanskritShlok: "वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ। निर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा॥",
+    sanskritTranslation: "May Lord Ganesha, of curved trunk and immense brilliance like ten million suns, remove all obstacles from our journey forever.",
+    mainInviteText: "Together with their families, Rohan Sharma and Priya Verma cordially request the honour of your presence and warm blessings as they unite in holy matrimony.",
+    closingQuote: "TWO HEARTS. ONE SACRED UNION. A LIFETIME OF LOVE.",
+    closingSubtext: "Your gracious presence, love, and divine blessings will make our sacred celebration complete. We eagerly await to welcome you with folded hands.",
   },
   events: [
     {
       id: "haldi",
+      number: "01",
       name: "Shubh Haldi & Phoolon Ki Holi",
       hindiTitle: "शुभ हल्दी एवं फूलों की होली",
+      slogan: "Bathed in sunshine, turmeric blessings, and fragrant marigold showers",
       date: "2026-12-18",
       displayDate: "Friday, 18 December 2026",
       time: "10:00 AM Onwards",
       venue: "The Saffron Courtyard, Amber Palace",
       address: "Bypass Road, Ralamandal, Indore, MP",
-      description: "An auspicious morning bathed in yellow sunshine, fragrant organic turmeric, soulful dhol rhythms, and showers of fresh marigold and rose petals.",
+      description: "An auspicious morning filled with fresh organic turmeric paste, lively folk rhythms, and a joyous Phoolon ki Holi celebration under open skies.",
       dressCode: {
-        title: "Sunshine & Marigold Hues",
-        description: "Yellow Kurtas, Mustard Sarees, Bandhani Dupattas & Floral Accents",
-        palette: ["#FBBF24", "#F59E0B", "#FEF3C7", "#D97706"],
+        title: "Sunshine & Marigold Yellow",
+        description: "Yellow Kurtas, Mustard Sarees, Bandhani Dupattas & Fresh Floral Accents",
+        palette: [
+          { name: "Sunshine Yellow", hex: "#FBBF24" },
+          { name: "Marigold Gold", hex: "#D97706" },
+          { name: "Warm Ivory", hex: "#FEF3C7" },
+        ],
       },
       theme: {
-        bgClass: "from-amber-900/90 via-yellow-950/80 to-amber-950",
-        accentColor: "#F59E0B",
-        textColor: "#FEF3C7",
-        cardBg: "rgba(35, 23, 7, 0.85)",
-        pattern: "marigold",
+        badgeBg: "bg-amber-100 text-amber-900 border-amber-300",
+        accentColor: "#D97706",
+        cardBorder: "border-amber-400",
+        cardBg: "from-[#FFFDF7] via-[#FEF9EE] to-[#FDF3DE]",
+        patternName: "marigold",
       },
-      image: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1200&q=80",
+      image: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1000&q=80",
       googleMapsUrl: "https://maps.google.com/?q=The+Grand+Amber+Palace+Indore",
-      specialHighlights: ["Organic Haldi Ceremony", "Phoolon ki Holi", "Traditional Malwi Folk Troupe"],
+      rituals: ["Traditional Haldi Ubtan", "Phoolon Ki Holi Shower", "Live Dhol & Malwi Folk"],
     },
     {
       id: "mehndi",
+      number: "02",
       name: "Rang Mehndi & Sufi Shaam",
-      hindiTitle: "रंगारंग मेहंदी उत्सव",
+      hindiTitle: "रंगारंग मेहंदी एवं सूफी शाम",
+      slogan: "Delicate henna motifs, sweet jasmine fragrance, and acoustic Sufi melodies",
       date: "2026-12-18",
       displayDate: "Friday, 18 December 2026",
       time: "04:30 PM Onwards",
-      venue: "Emerald Lakefront Pavilions",
+      venue: "Emerald Lakefront Pavilions, Amber Palace",
       address: "Bypass Road, Ralamandal, Indore, MP",
-      description: "Intricate Rajasthani henna artistry accompanied by fragrant jasmine gajras, refreshing mint coolers, and soulful Sufi folk acoustics under lush canopies.",
+      description: "Intricate Rajasthani mehndi artistry adorned on hands with fresh mint coolers, live bangle bazaar, and mesmerizing twilight Sufi tunes by the lake.",
       dressCode: {
-        title: "Emerald & Botanical Splendor",
-        description: "Forest Greens, Mint Lehengas, Mehendi Green Kurtas & Floral Jewelry",
-        palette: ["#047857", "#10B981", "#D1FAE5", "#064E3B"],
+        title: "Emerald & Mint Botanicals",
+        description: "Forest Green Kurtas, Mint Lehengas, Floral Prints & Light Jewelry",
+        palette: [
+          { name: "Emerald Green", hex: "#047857" },
+          { name: "Mint Hue", hex: "#6EE7B7" },
+          { name: "Forest Dark", hex: "#064E3B" },
+        ],
       },
       theme: {
-        bgClass: "from-emerald-950 via-teal-950 to-green-950",
-        accentColor: "#10B981",
-        textColor: "#D1FAE5",
-        cardBg: "rgba(6, 40, 28, 0.85)",
-        pattern: "mehndi",
+        badgeBg: "bg-emerald-100 text-emerald-900 border-emerald-300",
+        accentColor: "#059669",
+        cardBorder: "border-emerald-500",
+        cardBg: "from-[#FCFDFD] via-[#F0FDF4] to-[#E6F7ED]",
+        patternName: "mehndi",
       },
-      image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=1200&q=80",
+      image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=1000&q=80",
       googleMapsUrl: "https://maps.google.com/?q=The+Grand+Amber+Palace+Indore",
-      specialHighlights: ["Master Henna Artists", "Live Bangles & Parandi Counter", "Acoustic Sufi Ensemble"],
+      rituals: ["Master Henna Artists", "Bangles & Parandi Stall", "Acoustic Sufi Ensemble"],
     },
     {
       id: "sangeet",
-      name: "Royal Sangeet & Musical Extravaganza",
-      hindiTitle: "संगीत एवं नृत्य संध्या",
+      number: "03",
+      name: "Royal Sangeet & Musical Night",
+      hindiTitle: "शाही संगीत एवं नृत्य संध्या",
+      slogan: "An electrifying evening of family choreography, music, and grand celebration",
       date: "2026-12-18",
       displayDate: "Friday, 18 December 2026",
       time: "07:30 PM Till Midnight",
-      venue: "Grand Sheesh Mahal Ballroom",
+      venue: "Grand Sheesh Mahal Ballroom, Amber Palace",
       address: "Bypass Road, Ralamandal, Indore, MP",
-      description: "An electrifying celebration of dance, family performances, dazzling chandeliers, stellar DJ sets, and a regal feast of royal cuisine.",
+      description: "A dazzling night beneath crystal chandeliers featuring stellar performances by both families, couple dance, and a late-night feast of royal flavors.",
       dressCode: {
-        title: "Regal Glamour & Sparkle",
-        description: "Cocktail Lehengas, Indo-Western Tuxedos, Royal Purple, Champagne & Shimmer",
-        palette: ["#7C3AED", "#A855F7", "#F3E8FF", "#C59A30"],
+        title: "Royal Glamour & Champagne Gold",
+        description: "Cocktail Lehengas, Indo-Western Tuxedos, Royal Purple, Shimmer & Zari",
+        palette: [
+          { name: "Royal Amethyst", hex: "#6B21A8" },
+          { name: "Champagne Gold", hex: "#C59A30" },
+          { name: "Deep Indigo", hex: "#1E1B4B" },
+        ],
       },
       theme: {
-        bgClass: "from-purple-950 via-indigo-950 to-slate-950",
-        accentColor: "#C084FC",
-        textColor: "#F3E8FF",
-        cardBg: "rgba(35, 14, 58, 0.85)",
-        pattern: "sangeet",
+        badgeBg: "bg-purple-100 text-purple-900 border-purple-300",
+        accentColor: "#7E22CE",
+        cardBorder: "border-purple-500",
+        cardBg: "from-[#FCFBFD] via-[#FAF5FF] to-[#F3E8FF]",
+        patternName: "sangeet",
       },
-      image: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=80",
+      image: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1000&q=80",
       googleMapsUrl: "https://maps.google.com/?q=The+Grand+Amber+Palace+Indore",
-      specialHighlights: ["Couple Choreography", "Family Dance Face-off", "Live Bollywood Band & DJ"],
+      rituals: ["Family Dance Face-off", "Rohan & Priya Duet", "DJ & Royal Feast"],
     },
     {
       id: "tilak",
+      number: "04",
       name: "Traditional Tilak & Shubh Vivah Muhurat",
       hindiTitle: "तिलक एवं शुभ मुहूर्त संस्कार",
+      slogan: "Sacred Vedic rituals, chandan tilak, and ancestral prayers",
       date: "2026-12-19",
       displayDate: "Saturday, 19 December 2026",
       time: "11:30 AM",
-      venue: "Durbar Hall of Amber Palace",
+      venue: "Durbar Hall, Amber Palace",
       address: "Bypass Road, Ralamandal, Indore, MP",
-      description: "Solemn Vedic rituals marking the ceremonial blessing of the groom with sandalwood tilak, silver coins, and familial prayers amidst chanting of sacred mantras.",
+      description: "Reverent Vedic blessings where the groom is blessed with sacred sandalwood tilak, silver coins, and prayers amidst the chanting of Vedic shlokas.",
       dressCode: {
         title: "Traditional Heritage Silks",
-        description: "Banarasi & Kanjeevaram Silks, Maroon Dhoti Kurtas, Gold Zari accents",
-        palette: ["#881337", "#9F1239", "#FFE4E6", "#C59A30"],
+        description: "Banarasi & Kanjeevaram Silks, Maroon Dhoti Kurtas, Gold Borders",
+        palette: [
+          { name: "Crimson Maroon", hex: "#881337" },
+          { name: "Antique Gold", hex: "#C59A30" },
+          { name: "Raw Silk Beige", hex: "#F5ECCF" },
+        ],
       },
       theme: {
-        bgClass: "from-rose-950 via-stone-950 to-red-950",
-        accentColor: "#FB7185",
-        textColor: "#FFE4E6",
-        cardBg: "rgba(50, 10, 18, 0.85)",
-        pattern: "tilak",
+        badgeBg: "bg-rose-100 text-rose-900 border-rose-300",
+        accentColor: "#9F1239",
+        cardBorder: "border-rose-500",
+        cardBg: "from-[#FDFBFB] via-[#FFF1F2] to-[#FFE4E6]",
+        patternName: "tilak",
       },
-      image: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=1200&q=80",
+      image: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=1000&q=80",
       googleMapsUrl: "https://maps.google.com/?q=The+Grand+Amber+Palace+Indore",
-      specialHighlights: ["Vedic Mantra Chanting", "Royal Turban Ceremony (Safa Bandhai)", "Pooja & Sweets Prasad"],
+      rituals: ["Chandan Tilak Ceremony", "Royal Safa Bandhai", "Vedic Havan & Prasad"],
     },
     {
       id: "wedding",
-      name: "Grand Varmala & Pheras Ceremony",
+      number: "05",
+      name: "Grand Varmala & Sacred Pheras",
       hindiTitle: "शुभ विवाह एवं वरमाला महोत्सव",
+      slogan: "Seven sacred vows around the holy fire under starlit canopies",
       date: "2026-12-19",
       displayDate: "Saturday, 19 December 2026",
       time: "06:30 PM Onwards",
-      venue: "The Royal Lakefront Mandap",
+      venue: "The Royal Lakefront Mandap, Amber Palace",
       address: "Bypass Road, Ralamandal, Indore, MP",
       muhurat: "Auspicious Muhurat: 07:35 PM | Royal Baraat Arrival: 06:00 PM | Grand Varmala: 07:15 PM",
-      description: "Under the starlit canopy adorned with thousands of fragrant Kashmiri red roses and cascading jasmine, Rohan and Priya take the sacred seven vows around the holy fire.",
+      description: "Under a grand mandap draped with thousands of fresh red roses, Rohan and Priya exchange floral garlands and take the eternal seven steps around the holy agni.",
       dressCode: {
         title: "Royal Red, Ivory & Antique Gold",
         description: "Bridal Red, Deep Crimson, Ivory Sherwanis with Royal Safas and Polki Jewels",
-        palette: ["#991B1B", "#7F1D1D", "#FEF2F2", "#EAB308"],
+        palette: [
+          { name: "Royal Bridal Red", hex: "#991B1B" },
+          { name: "Deep Gold", hex: "#C59A30" },
+          { name: "Royal Ivory", hex: "#FAF7F2" },
+        ],
       },
       theme: {
-        bgClass: "from-red-950 via-amber-950/60 to-stone-950",
-        accentColor: "#EAB308",
-        textColor: "#FFFBEB",
-        cardBg: "rgba(55, 12, 16, 0.9)",
-        pattern: "mandap",
+        badgeBg: "bg-red-100 text-red-900 border-red-300",
+        accentColor: "#B91C1C",
+        cardBorder: "border-red-600",
+        cardBg: "from-[#FDFBFB] via-[#FEF2F2] to-[#FEE2E2]",
+        patternName: "mandap",
       },
-      image: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80",
+      image: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1000&q=80",
       googleMapsUrl: "https://maps.google.com/?q=The+Grand+Amber+Palace+Indore",
-      specialHighlights: ["Grand Royal Baraat with Baggi", "Floating Lake Varmala Stage", "Holy Vedic Pheras & Saptapadi"],
+      rituals: ["Royal Baraat on Baggi", "Floating Lake Varmala Stage", "Sacred Saptapadi (7 Pheras)"],
     },
     {
       id: "reception",
+      number: "06",
       name: "Royal Gala Dinner & Dawat-e-Khaas",
       hindiTitle: "शाही प्रतिभोज एवं आशीर्वाद समारोह",
+      slogan: "Celebrating the new beginning with gratitude, strings symphony, and culinary wonders",
       date: "2026-12-20",
       displayDate: "Sunday, 20 December 2026",
       time: "07:30 PM Onwards",
       venue: "The Imperial Lawns, Amber Palace",
       address: "Bypass Road, Ralamandal, Indore, MP",
-      description: "An evening of gratitude, majestic culinary wonders of Central India & Awadh, fine strings quartet, and celebrating the beginning of forever with cherished family and friends.",
+      description: "An evening of royal hospitality and culinary feasts honoring Central India and Awadh, accompanied by a strings symphony orchestra under starlit skies.",
       dressCode: {
         title: "Champagne, Gold & Black Tie Elegance",
         description: "Evening Gowns, Embroidered Bandhgalas, Black Tie Suits or Festive Luxury Silks",
-        palette: ["#1F2937", "#111827", "#F9FAFB", "#F59E0B"],
+        palette: [
+          { name: "Midnight Black", hex: "#111827" },
+          { name: "Champagne Gold", hex: "#C59A30" },
+          { name: "Pearl White", hex: "#F9FAFB" },
+        ],
       },
       theme: {
-        bgClass: "from-slate-950 via-zinc-950 to-stone-950",
-        accentColor: "#FBBF24",
-        textColor: "#F3F4F6",
-        cardBg: "rgba(18, 20, 28, 0.9)",
-        pattern: "ballroom",
+        badgeBg: "bg-neutral-100 text-neutral-900 border-neutral-300",
+        accentColor: "#1F2937",
+        cardBorder: "border-gold-500",
+        cardBg: "from-[#FCFBFD] via-[#FAF8F5] to-[#F5EFE6]",
+        patternName: "ballroom",
       },
-      image: "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=1200&q=80",
+      image: "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=1000&q=80",
       googleMapsUrl: "https://maps.google.com/?q=The+Grand+Amber+Palace+Indore",
-      specialHighlights: ["Royal Banquet Buffet with 75+ Delicacies", "Strings Symphony Orchestra", "Photo Booth & Family Blessings"],
-    },
-  ],
-  story: [
-    {
-      id: "milestone-1",
-      year: "2022",
-      title: "An Unplanned Encounter",
-      subtitle: "The Library of CEPT Ahmedabad",
-      description: "Amongst centuries-old architectural manuscripts and quiet corridors, a misplaced blueprint led to a spontaneous conversation about stepwells and heritage buildings.",
-      image: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80",
-      location: "Ahmedabad, Gujarat",
-    },
-    {
-      id: "milestone-2",
-      year: "2023",
-      title: "Chai, Kathak & Endless Conversations",
-      subtitle: "Sunset by the Narmada River",
-      description: "Between Rohan's sketches and Priya's rhythm of ghungroos, hours felt like seconds. They realized that home wasn't a place, but whenever they were in each other's presence.",
-      image: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=800&q=80",
-      location: "Maheshwar, Madhya Pradesh",
-    },
-    {
-      id: "milestone-3",
-      year: "2024",
-      title: "The Golden Fort Proposal",
-      subtitle: "Beneath the Stars of Jaisalmer",
-      description: "Overlooking the sun-drenched golden ramparts of the fort at twilight, Rohan presented an heirloom ring. With tears of joy and trembling smiles, Priya said yes.",
-      image: "https://images.unsplash.com/photo-1469371670807-013ccf25f16a?auto=format&fit=crop&w=800&q=80",
-      location: "Jaisalmer, Rajasthan",
-    },
-    {
-      id: "milestone-4",
-      year: "2025",
-      title: "The Roka & Joining of Families",
-      subtitle: "Laughter, Sweets & Sacred Blessings",
-      description: "Surrounded by elders, sacred sweets, and joyful tears, two families became one. The journey of preparing for the sacred seven vows had officially begun.",
-      image: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=800&q=80",
-      location: "Indore, Madhya Pradesh",
-    },
-    {
-      id: "milestone-5",
-      year: "2026",
-      title: "The Beginning of Forever",
-      subtitle: "The Sacred Vows at Amber Palace",
-      description: "Now we stand on the threshold of our forever. Hand in hand, guided by love, faith, and the blessings of everyone who shaped our lives.",
-      image: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80",
-      location: "Indore, Madhya Pradesh",
-    },
-  ],
-  gallery: [
-    {
-      id: "gal-1",
-      title: "Royal Twilight Portrait",
-      category: "couple",
-      image: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80",
-      caption: "In each other's eyes, we found our forever sanctuary.",
-      aspect: "portrait",
-    },
-    {
-      id: "gal-2",
-      title: "Heritage Archways",
-      category: "prewedding",
-      image: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1200&q=80",
-      caption: "Golden light filtering through palace jalis.",
-      aspect: "landscape",
-    },
-    {
-      id: "gal-3",
-      title: "The Radiant Bride",
-      category: "ceremony",
-      image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1000&q=80",
-      caption: "Priya draped in ancestral silks and anticipation.",
-      aspect: "portrait",
-    },
-    {
-      id: "gal-4",
-      title: "The Noble Groom",
-      category: "ceremony",
-      image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=1000&q=80",
-      caption: "Rohan ready to welcome his bride into his heart.",
-      aspect: "portrait",
-    },
-    {
-      id: "gal-5",
-      title: "Sacred Holy Fire & Florals",
-      category: "ceremony",
-      image: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=1200&q=80",
-      caption: "The divine fragrance of marigolds and sandalwood.",
-      aspect: "landscape",
-    },
-    {
-      id: "gal-6",
-      title: "Hand in Hand",
-      category: "couple",
-      image: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=1000&q=80",
-      caption: "Holding tight through every twist and turn of life.",
-      aspect: "square",
-    },
-    {
-      id: "gal-7",
-      title: "Family Celebrations",
-      category: "family",
-      image: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=80",
-      caption: "Generations united in shared laughter and dance.",
-      aspect: "landscape",
-    },
-    {
-      id: "gal-8",
-      title: "Palace Reflections",
-      category: "prewedding",
-      image: "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=1200&q=80",
-      caption: "Under the tranquil waters of the royal pavilion.",
-      aspect: "landscape",
+      rituals: ["Strings Symphony Orchestra", "Dawat-e-Khaas Royal Feast", "Family Photo & Blessings"],
     },
   ],
   families: {
@@ -483,11 +375,6 @@ export const weddingConfig: WeddingConfig = {
           names: "Mr. Gaurav Sharma & Mrs. Neha Sharma",
           blessing: "Eagerly waiting to celebrate with you.",
         },
-        {
-          role: "Little Niece",
-          names: "Baby Ananya Sharma",
-          blessing: "Ready with her dancing shoes!",
-        },
       ],
     },
     brideSide: {
@@ -509,26 +396,18 @@ export const weddingConfig: WeddingConfig = {
           names: "Aditya Verma",
           blessing: "Ready to welcome the baraat with pomp and warmth.",
         },
-        {
-          role: "Maternal & Paternal Elders",
-          names: "The Verma & Saxena Extended Families",
-          blessing: "With heartfelt blessings and affection.",
-        },
       ],
     },
   },
   music: {
     title: "Raag Yaman — Shehnai & Sitar Serenade",
     artist: "Royal Traditional Indian Wedding Ensemble",
-    // We provide a soothing ambient audio generator / royalty-free track
     src: "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=indian-traditional-music-113063.mp3",
-    autoPlayPrompt: "Tap anywhere to immerse in royal Indian melodies",
   },
   rsvp: {
     enabled: true,
     deadline: "1st December 2026",
     contactEmail: "celebrations@rohanpriya2026.com",
     contactPhone: "+91 98765 43210",
-    allowPlusOne: true,
   },
 };

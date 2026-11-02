@@ -2,13 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { RoyalEnvelope } from './components/envelope/RoyalEnvelope';
 import { RoyalNavbar } from './components/navigation/RoyalNavbar';
 import { ScrollTransformInvitation } from './components/invitation/ScrollTransformInvitation';
+import { RoyalEventsDeckSection } from './components/events/RoyalEventsDeckSection';
 import { WeddingCountdown } from './components/countdown/WeddingCountdown';
-import { WeddingEventsSection } from './components/events/WeddingEventsSection';
-import { CoupleStoryGallery } from './components/story/CoupleStoryGallery';
 import { VenueSection } from './components/venue/VenueSection';
 import { FamilySection } from './components/family/FamilySection';
 import { RsvpSection } from './components/rsvp/RsvpSection';
-import { GuestWishesWall } from './components/wishes/GuestWishesWall';
 import { GrandClosingSection } from './components/closing/GrandClosingSection';
 import { RoyalMusicPlayer } from './components/audio/RoyalMusicPlayer';
 import { ShareQrModal } from './components/share/ShareQrModal';
@@ -55,7 +53,7 @@ export const App: React.FC = () => {
         />
       )}
 
-      {/* 2. Main Luxury Invitation Website Experience */}
+      {/* 2. Main Royal Invitation Website Experience */}
       <div className={`transition-opacity duration-1000 ${envelopeOpened ? 'opacity-100' : 'opacity-0'}`}>
         
         {/* Sticky Luxury Navigation */}
@@ -64,31 +62,25 @@ export const App: React.FC = () => {
           guestName={guestName}
         />
 
-        {/* Section 4 & 5: Spiritual Ganesh Vandana & Scroll-Based Invitation Transformation */}
+        {/* Section 1: Sacred Ganesh Vandana & Bride & Groom Royal Unfold */}
         <ScrollTransformInvitation />
 
-        {/* Section 9: Auspicious Muhurat Live Countdown */}
+        {/* Section 2: Royal Stacked Event Cards (Smooth Scroll Deck Animation) */}
+        <RoyalEventsDeckSection />
+
+        {/* Section 3: Auspicious Muhurat Live Countdown */}
         <WeddingCountdown />
 
-        {/* Section 8: Wedding Events — Individual Cinematic Chapters */}
-        <WeddingEventsSection />
-
-        {/* Section 7: Couple's Story & Curated Photo Gallery */}
-        <CoupleStoryGallery />
-
-        {/* Section 10: Venue & Hospitality Navigation */}
+        {/* Section 4: Palace Venue & Google Maps Navigation */}
         <VenueSection />
 
-        {/* Section 13C: Family Heritage & Ancestral Blessings */}
+        {/* Section 5: Family Lineage & Ancestral Blessings */}
         <FamilySection />
 
-        {/* Section 12: RSVP — Guest Confirmation */}
+        {/* Section 6: RSVP — Guest Confirmation */}
         <RsvpSection initialGuestName={guestName} />
 
-        {/* Section 13D: Guest Wishes & Blessings Wall */}
-        <GuestWishesWall />
-
-        {/* Section 14: Grand Closing Experience */}
+        {/* Section 7: Grand Royal Closing Experience */}
         <GrandClosingSection />
 
         {/* Persistent Royal Ambient Audio Player */}

@@ -40,11 +40,11 @@ export default {
         }
       },
       fontFamily: {
-        serif: ['"Cinzel"', '"Playfair Display"', 'Georgia', 'serif'],
-        decorative: ['"Cinzel Decorative"', 'serif'],
+        serif: ['"Cormorant Garamond"', '"Playfair Display"', 'Georgia', 'serif'],
+        heading: ['"Cormorant Garamond"', 'serif'],
         script: ['"Great Vibes"', 'cursive'],
-        body: ['"Plus Jakarta Sans"', 'sans-serif'],
-        hindi: ['"Rozha One"', '"Cinzel"', 'serif'],
+        body: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+        hindi: ['"Rozha One"', '"Cormorant Garamond"', 'serif'],
       },
       boxShadow: {
         'royal': '0 20px 50px -12px rgba(197, 154, 48, 0.25)',

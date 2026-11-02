@@ -21,10 +21,9 @@ export const RoyalNavbar: React.FC<RoyalNavbarProps> = ({ onOpenShareModal, gues
 
   const navLinks = [
     { label: 'Ceremonies', href: '#events' },
-    { label: 'Our Story', href: '#story-gallery' },
-    { label: 'Venue', href: '#venue' },
-    { label: 'Families', href: '#family' },
-    { label: 'Blessings', href: '#wishes' },
+    { label: 'Countdown', href: '#countdown' },
+    { label: 'Venue & Map', href: '#venue' },
+    { label: 'Family Blessings', href: '#family' },
     { label: 'RSVP', href: '#rsvp' },
   ];
 

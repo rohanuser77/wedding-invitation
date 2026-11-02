@@ -51,7 +51,7 @@ export const WeddingCountdown: React.FC = () => {
   }, []);
 
   return (
-    <section className="relative py-20 px-4 sm:px-6 bg-gradient-to-b from-[#FAF7F2] via-[#F6EFE3] to-[#FAF7F2] text-neutral-800 overflow-hidden">
+    <section id="countdown" className="relative py-20 px-4 sm:px-6 bg-gradient-to-b from-[#FAF7F2] via-[#F6EFE3] to-[#FAF7F2] text-neutral-800 overflow-hidden">
       {/* Decorative Palace Jali Border */}
       <div className="max-w-4xl mx-auto relative rounded-3xl border-2 border-gold-400/80 bg-gradient-to-b from-white/90 via-[#FDFBF7]/90 to-white/90 p-8 sm:p-14 royal-card-shadow text-center">
         

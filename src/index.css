@@ -73,11 +73,13 @@
   }
 
   .font-serif-royal {
-    font-family: 'Cinzel', 'Playfair Display', serif;
+    font-family: 'Cormorant Garamond', 'Playfair Display', serif;
+    letter-spacing: 0.04em;
   }
 
-  .font-decorative {
-    font-family: 'Cinzel Decorative', serif;
+  .font-heading {
+    font-family: 'Cormorant Garamond', serif;
+    letter-spacing: 0.05em;
   }
 }
 
