@@ -17,7 +17,7 @@ export const ShareQrModal: React.FC<ShareQrModalProps> = ({ isOpen, onClose }) =
 
   // Generate current or personalized URL
   const getShareUrl = () => {
-    const origin = typeof window !== 'undefined' ? window.location.origin : 'https://rohan-priya-wedding.vercel.app';
+    const origin = typeof window !== 'undefined' ? window.location.origin : 'https://person1-person2-wedding.vercel.app';
     const path = typeof window !== 'undefined' ? window.location.pathname : '/';
     const baseUrl = `${origin}${path}`;
     

@@ -78,7 +78,7 @@ export const WeddingCountdown: React.FC = () => {
               Joined in Sacred Matrimony
             </h4>
             <p className="text-neutral-700 text-sm mt-2 leading-relaxed">
-              With the blessings of our elders and Almighty God, Rohan and Priya are now happily wedded! Thank you to everyone who shared their love, warm wishes, and presence.
+              With the blessings of our elders and Almighty God, Person 1 and Person 2 are now happily wedded! Thank you to everyone who shared their love, warm wishes, and presence.
             </p>
           </div>
         ) : (

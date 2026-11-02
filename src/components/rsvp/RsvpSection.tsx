@@ -324,7 +324,7 @@ export const RsvpSection: React.FC<{ initialGuestName?: string }> = ({ initialGu
               {/* Personal Blessing / Message */}
               <div>
                 <label className="block text-xs font-serif uppercase tracking-widest text-neutral-700 font-semibold mb-2">
-                  Personal Blessing for Rohan & Priya (Optional)
+                  Personal Blessing for Person 1 & Person 2 (Optional)
                 </label>
                 <textarea
                   rows={3}

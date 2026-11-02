@@ -113,9 +113,9 @@ export interface WeddingConfig {
 export const weddingConfig: WeddingConfig = {
   couple: {
     groom: {
-      firstName: "Rohan",
-      lastName: "Sharma",
-      fullName: "Rohan Sharma",
+      firstName: "Person 1",
+      lastName: "",
+      fullName: "Person 1",
       fatherName: "Mr. Rajendra Sharma",
       motherName: "Mrs. Sunita Sharma",
       grandParents: "Late Shri Rameshwar Dayal & Smt. Shanti Devi Sharma",
@@ -123,9 +123,9 @@ export const weddingConfig: WeddingConfig = {
       familyHeritage: "Indore & Jaipur Heritage",
     },
     bride: {
-      firstName: "Priya",
-      lastName: "Verma",
-      fullName: "Priya Verma",
+      firstName: "Person 2",
+      lastName: "",
+      fullName: "Person 2",
       fatherName: "Dr. Alok Verma",
       motherName: "Dr. (Mrs.) Meenakshi Verma",
       grandParents: "Late Shri Brijmohan Lal & Smt. Kamla Devi Verma",
@@ -135,8 +135,8 @@ export const weddingConfig: WeddingConfig = {
     couplePortrait: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1200&q=80",
   },
   weddingDetails: {
-    title: "Rohan & Priya Royal Wedding Celebration",
-    hashtag: "#RoPiForever",
+    title: "Person 1 & Person 2 Royal Wedding Celebration",
+    hashtag: "#Person1AndPerson2",
     mainWeddingDate: "2026-12-19T19:30:00",
     dateRangeDisplay: "18 – 20 December 2026",
     city: "Indore",
@@ -156,7 +156,7 @@ export const weddingConfig: WeddingConfig = {
     sanskritInvoking: "|| श्री गणेशाय नमः ||",
     sanskritShlok: "वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ। निर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा॥",
     sanskritTranslation: "May Lord Ganesha, of curved trunk and immense brilliance like ten million suns, remove all obstacles from our journey forever.",
-    mainInviteText: "Together with their families, Rohan Sharma and Priya Verma cordially request the honour of your presence and warm blessings as they unite in holy matrimony.",
+    mainInviteText: "Together with their families, Person 1 and Person 2 cordially request the honour of your presence and warm blessings as they unite in holy matrimony.",
     closingQuote: "TWO HEARTS. ONE SACRED UNION. A LIFETIME OF LOVE.",
     closingSubtext: "Your gracious presence, love, and divine blessings will make our sacred celebration complete. We eagerly await to welcome you with folded hands.",
   },
@@ -255,7 +255,7 @@ export const weddingConfig: WeddingConfig = {
       },
       image: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1000&q=80",
       googleMapsUrl: "https://maps.google.com/?q=The+Grand+Amber+Palace+Indore",
-      rituals: ["Family Dance Face-off", "Rohan & Priya Duet", "DJ & Royal Feast"],
+      rituals: ["Family Dance Face-off", "Person 1 & Person 2 Duet", "DJ & Royal Feast"],
     },
     {
       id: "tilak",
@@ -301,7 +301,7 @@ export const weddingConfig: WeddingConfig = {
       venue: "The Royal Lakefront Mandap, Amber Palace",
       address: "Bypass Road, Ralamandal, Indore, MP",
       muhurat: "Auspicious Muhurat: 07:35 PM | Royal Baraat Arrival: 06:00 PM | Grand Varmala: 07:15 PM",
-      description: "Under a grand mandap draped with thousands of fresh red roses, Rohan and Priya exchange floral garlands and take the eternal seven steps around the holy agni.",
+      description: "Under a grand mandap draped with thousands of fresh red roses, Person 1 and Person 2 exchange floral garlands and take the eternal seven steps around the holy agni.",
       dressCode: {
         title: "Royal Red, Ivory & Antique Gold",
         description: "Bridal Red, Deep Crimson, Ivory Sherwanis with Royal Safas and Polki Jewels",
@@ -407,7 +407,7 @@ export const weddingConfig: WeddingConfig = {
   rsvp: {
     enabled: true,
     deadline: "1st December 2026",
-    contactEmail: "celebrations@rohanpriya2026.com",
+    contactEmail: "celebrations@person1person2.com",
     contactPhone: "+91 98765 43210",
   },
 };

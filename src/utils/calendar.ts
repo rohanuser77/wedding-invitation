@@ -4,7 +4,7 @@ import type { WeddingEvent } from '../data/weddingConfig';
  * Generate a Google Calendar link for a wedding event
  */
 export const createGoogleCalendarUrl = (event: WeddingEvent): string => {
-  const title = encodeURIComponent(`Rohan & Priya Wedding: ${event.name}`);
+  const title = encodeURIComponent(`Person 1 & Person 2 Wedding: ${event.name}`);
   const details = encodeURIComponent(`${event.description}\n\nDress Code: ${event.dressCode.title} - ${event.dressCode.description}\nVenue: ${event.venue}\n${event.muhurat ? `\nMuhurat: ${event.muhurat}` : ''}`);
   const location = encodeURIComponent(`${event.venue}, ${event.address}`);
   
@@ -24,11 +24,11 @@ export const downloadIcsFile = (event: WeddingEvent) => {
   const icsData = [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
-    'PRODID:-//Rohan and Priya Royal Wedding//EN',
+    'PRODID:-//Person 1 and Person 2 Royal Wedding//EN',
     'CALSCALE:GREGORIAN',
     'METHOD:PUBLISH',
     'BEGIN:VEVENT',
-    `SUMMARY:Rohan & Priya Wedding - ${event.name}`,
+    `SUMMARY:Person 1 & Person 2 Wedding - ${event.name}`,
     `DESCRIPTION:${event.description.replace(/\n/g, '\\n')}`,
     `LOCATION:${event.venue}, ${event.address}`,
     `DTSTART:${startDateStr}T100000Z`,
@@ -41,7 +41,7 @@ export const downloadIcsFile = (event: WeddingEvent) => {
   const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8' });
   const link = document.createElement('a');
   link.href = window.URL.createObjectURL(blob);
-  link.setAttribute('download', `${event.id}-rohan-priya-wedding.ics`);
+  link.setAttribute('download', `${event.id}-wedding.ics`);
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
